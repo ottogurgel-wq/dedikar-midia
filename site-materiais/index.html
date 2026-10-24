@@ -80,6 +80,7 @@ button[disabled]{opacity:.6;cursor:wait}
     PAINEL: { h:'o checklist dos 5 números.', titulo:'Checklist dos 5 números do dono', botao:'Abrir o checklist (PDF)', url:'https://drive.google.com/file/d/1SvcI9tBLlBb8gm5A5dDRGziTOWwzgHY6/view', texto:'Os 5 números que todo dono deveria olhar todo dia, e onde encontrar cada um.' },
     PROMPTS: { h:'o guia com os 6 prompts.', titulo:'6 prompts para passar trabalho para a IA', botao:'Abrir o guia (PDF)', url:'https://cdn.jsdelivr.net/gh/ottogurgel-wq/dedikar-midia@main/materiais/6_prompts_IA_Dedikar.pdf', texto:'Copie, cole e ajuste: mensagem difícil, resumo de reunião, proposta, respostas do WhatsApp, leitura da planilha de vendas e plano da semana.' },
     SEXTA: { h:'o modelo de fechamento da semana.', titulo:'Modelo de fechamento da semana', botao:'Abrir o modelo (PDF)', url:'https://cdn.jsdelivr.net/gh/ottogurgel-wq/dedikar-midia@main/materiais/Modelo_fechamento_semana_Dedikar.pdf', texto:'Os 3 passos para fechar a semana em 15 minutos e a folha para anotar o que ficou aberto, com prazo, primeiro passo e responsável.' },
+    SITE: { h:'o seu diagnóstico.', titulo:'Um site que trabalha pela sua empresa', botao:'Agendar meu diagnóstico gratuito', url:site('site'), texto:'O próximo passo é uma conversa de 45 minutos comigo, sem custo, para ver o que o seu site precisa fazer: vender, agendar, explicar ou captar.' },
     PROJETO: { h:'o seu diagnóstico.', titulo:'Como isso pode funcionar na sua empresa', botao:'Agendar meu diagnóstico gratuito', url:site('projeto'), texto:'O próximo passo é uma conversa de 45 minutos comigo, sem custo, para entender a sua operação e mostrar o que faz sentido construir.' },
     'DIAGNÓSTICO': { h:'o seu diagnóstico.', titulo:'Seu diagnóstico gratuito de 45 minutos', botao:'Escolher o melhor horário', url:site('diagnostico'), texto:'Escolha um horário. Antes da conversa eu te mando 2 minutinhos de perguntas para chegar preparado.' }
   };
@@ -100,7 +101,7 @@ button[disabled]{opacity:.6;cursor:wait}
     document.getElementById('d2').textContent = m.texto;
     var a = document.getElementById('mat'); a.href = m.url; a.textContent = m.botao;
     var ag = document.getElementById('agendar');
-    if (isca === 'PROJETO' || isca === 'DIAGNÓSTICO') ag.classList.add('hide'); else ag.href = site(slug);
+    if (isca === 'PROJETO' || isca === 'DIAGNÓSTICO' || isca === 'SITE') ag.classList.add('hide'); else ag.href = site(slug);
     document.getElementById('wpp').href = WPP;
     window.scrollTo(0,0);
   }
