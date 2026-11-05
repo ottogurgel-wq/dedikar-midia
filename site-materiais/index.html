@@ -97,12 +97,12 @@ input[type=date]{color-scheme:dark}
     PAINEL: { h:'o checklist dos 5 números.', titulo:'Checklist dos 5 números do dono', botao:'Abrir o checklist (PDF)', url:'https://drive.google.com/file/d/1SvcI9tBLlBb8gm5A5dDRGziTOWwzgHY6/view', texto:'Os 5 números que todo dono deveria olhar todo dia, e onde encontrar cada um.' },
     PROMPTS: { h:'o guia com os 6 prompts.', titulo:'6 prompts para passar trabalho para a IA', botao:'Abrir o guia (PDF)', url:'https://cdn.jsdelivr.net/gh/ottogurgel-wq/dedikar-midia@main/materiais/6_prompts_IA_Dedikar.pdf', texto:'Copie, cole e ajuste: mensagem difícil, resumo de reunião, proposta, respostas do WhatsApp, leitura da planilha de vendas e plano da semana.' },
     SEXTA: { h:'o modelo de fechamento da semana.', titulo:'Modelo de fechamento da semana', botao:'Abrir o modelo (PDF)', url:'https://cdn.jsdelivr.net/gh/ottogurgel-wq/dedikar-midia@main/materiais/Modelo_fechamento_semana_Dedikar.pdf', texto:'Os 3 passos para fechar a semana em 15 minutos e a folha para anotar o que ficou aberto, com prazo, primeiro passo e responsável.' },
-    SITE: { h:'o seu diagnóstico.', titulo:'Um site que trabalha pela sua empresa', botao:'Agendar meu diagnóstico gratuito', url:site('site'), texto:'O próximo passo é uma conversa de 45 minutos comigo, sem custo, para ver o que o seu site precisa fazer: vender, agendar, explicar ou captar.' },
+    SITE: { agenda:true, h:'o seu diagnóstico.', titulo:'Um site que trabalha pela sua empresa', botao:'Conhecer a Dedikar', url:site('site'), texto:'O próximo passo é uma conversa de 45 minutos comigo, sem custo, para ver o que o seu site precisa fazer: vender, agendar, explicar ou captar.' },
     GOVERNANCA: { h:'o checklist de governança de IA.', titulo:'Checklist de governança de IA', botao:'Abrir o checklist', url:'https://materiais.dedikaria.com.br/governanca.html', texto:'As 5 perguntas para a sua empresa ter dono, regras e aprovação antes de a IA falar com o seu cliente. Dá para preencher na tela e salvar em PDF.' },
-    PROJETO: { h:'o seu diagnóstico.', titulo:'Como isso pode funcionar na sua empresa', botao:'Agendar meu diagnóstico gratuito', url:site('projeto'), texto:'O próximo passo é uma conversa de 45 minutos comigo, sem custo, para entender a sua operação e mostrar o que faz sentido construir.' },
+    PROJETO: { agenda:true, h:'o seu diagnóstico.', titulo:'Como isso pode funcionar na sua empresa', botao:'Conhecer a Dedikar', url:site('projeto'), texto:'O próximo passo é uma conversa de 45 minutos comigo, sem custo, para entender a sua operação e mostrar o que faz sentido construir.' },
     AUTOMATIZAR: { h:'o seu diagnóstico.', titulo:'Diagnóstico gratuito de automação', botao:'Conhecer a Dedikar', url:'https://dedikaria.com.br/?utm_source=instagram&utm_medium=alerta&utm_campaign=automatizar', texto:'', agenda:true },
     GESTAO: { h:'o Raio-X da sua secretaria.', titulo:'Raio-X gratuito da sua secretaria', botao:'Conhecer a Dedikar', url:'https://dedikaria.com.br/?utm_source=instagram&utm_medium=alerta&utm_campaign=gestao', texto:'', agenda:true, publico:true },
-    'DIAGNÓSTICO': { h:'o seu diagnóstico.', titulo:'Seu diagnóstico gratuito de 45 minutos', botao:'Escolher o melhor horário', url:site('diagnostico'), texto:'Escolha um horário. Antes da conversa eu te mando 2 minutinhos de perguntas para chegar preparado.' }
+    'DIAGNÓSTICO': { agenda:true, h:'o seu diagnóstico.', titulo:'Seu diagnóstico gratuito de 45 minutos', botao:'Conhecer a Dedikar', url:site('diagnostico'), texto:'Escolha um horário. Antes da conversa eu te mando 2 minutinhos de perguntas para chegar preparado.' }
   };
   var q = new URLSearchParams(location.search);
   var isca = (q.get('isca') || '').trim().toUpperCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
@@ -119,6 +119,9 @@ input[type=date]{color-scheme:dark}
   function br(s){ var p=s.split('-'); return p[2]+'/'+p[1]; }
   function minimo(){ var d=new Date(); d.setHours(12,0,0,0); var c=0; while(c<2){ d.setDate(d.getDate()+1); var w=d.getDay(); if(w!==0&&w!==6) c++; } return d; }
   function ajusta(s){ var mn=minimo(); var d=s?new Date(s+'T12:00:00'):mn; if(isNaN(d)||d<mn) d=mn; while(d.getDay()===0||d.getDay()===6) d.setDate(d.getDate()+1); return iso(d); }
+  var PRE = { nome:q.get('n'), email:q.get('e'), whats:q.get('w'), empresa:q.get('emp') };
+  Object.keys(PRE).forEach(function(k){ if (PRE[k]) document.getElementById(k).value = PRE[k]; });
+  if (ORIG.m === 'email' || ORIG.m === 'whatsapp') document.getElementById('kicker').textContent = 'Diagnóstico gratuito com o Otto';
   if (m.agenda) {
     document.getElementById('ag').classList.remove('hide');
     if (m.publico) { document.getElementById('g-func').classList.add('hide'); document.getElementById('g-pub').classList.remove('hide');
