@@ -63,7 +63,7 @@ input[type=date]{color-scheme:dark}
         <input id="cargo" maxlength="80" placeholder="Ex.: Secretário de Administração, vereador">
         <label for="mun">Município</label>
         <input id="mun" maxlength="60" placeholder="Ex.: Carpina"></div>
-        <div class="row2"><div><label for="dia">Melhor dia para eu te chamar</label>
+        <div class="row2"><div><label for="dia">Melhor dia para a reunião</label>
         <input id="dia" type="date"></div>
         <div><label for="per">Período</label>
         <select id="per"><option>Manhã</option><option>Tarde</option></select></div></div>
@@ -125,7 +125,7 @@ input[type=date]{color-scheme:dark}
       document.querySelector('label[for=empresa]').innerHTML = 'Prefeitura, câmara ou órgão'; document.getElementById('empresa').placeholder = 'Ex.: Prefeitura de Carpina'; }
     else { document.querySelector('label[for=empresa]').innerHTML = 'Empresa'; }
     document.querySelector('h1').innerHTML = m.publico ? 'Escolha o dia do <em>Raio-X da sua secretaria.</em>' : 'Escolha o dia do <em>seu diagnóstico gratuito.</em>';
-    document.getElementById('p-desc').textContent = 'Preencha e escolha o melhor dia. Eu te chamo no WhatsApp na data escolhida para marcar a conversa.';
+    document.getElementById('p-desc').textContent = 'Preencha e escolha o melhor dia e período. O convite da reunião, com o link do Google Meet, chega no seu e-mail em alguns minutos.';
     document.getElementById('btn').textContent = 'Confirmar o dia';
     var dia = document.getElementById('dia'), mn = iso(minimo());
     dia.min = mn; dia.value = mn;
@@ -142,7 +142,7 @@ input[type=date]{color-scheme:dark}
     document.getElementById('d2').textContent = m.texto;
     var a = document.getElementById('mat'); a.href = m.url; a.textContent = m.botao;
     if (m.agenda) { var v = document.getElementById('dia').value, pr = document.getElementById('per').value.toLowerCase(), d = new Date(v+'T12:00:00');
-      document.getElementById('t2').textContent = 'Combinado: eu te chamo no WhatsApp na ' + DIAS[d.getDay()] + ', ' + br(v) + ', pela ' + pr + '.';
+      document.getElementById('t2').textContent = 'Pronto! Em alguns minutos chega no seu e-mail o convite da reunião para ' + DIAS[d.getDay()] + ', ' + br(v) + ', pela ' + pr + ', com o link do Google Meet. É só clicar em "Sim" para confirmar.';
       document.getElementById('d2').textContent = m.publico ? 'Na conversa eu faço o Raio-X da secretaria: onde está o trabalho repetido, quanto ele custa e o que dá para automatizar, dentro da Lei 14.133/2021.' : 'Na conversa eu olho a sua operação e mostro onde a automação tira trabalho repetido da equipe e quanto isso pode economizar. Sem custo.';
       document.getElementById('agendar').classList.add('hide'); }
     var ag = document.getElementById('agendar');
