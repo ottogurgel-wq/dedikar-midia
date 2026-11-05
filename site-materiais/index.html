@@ -33,6 +33,10 @@ button[disabled]{opacity:.6;cursor:wait}
 .err{color:#ff8a8a;font-size:14px;margin-top:10px;min-height:1em}
 .f{font-size:12px;color:var(--dim);margin-top:18px;text-align:center}
 .hide{display:none}
+select{width:100%;background:#0f1119;border:1.5px solid var(--line);border-radius:12px;padding:14px;font:inherit;font-size:16px;color:var(--ink);outline:none}
+.row2{display:flex;gap:10px}.row2>div{flex:1}
+input[type=date]{color-scheme:dark}
+.nota{font-size:13px;color:var(--dim);margin-top:6px}
 </style>
 </head>
 <body>
@@ -52,6 +56,19 @@ button[disabled]{opacity:.6;cursor:wait}
       <input id="whats" name="whats" type="tel" autocomplete="tel" required maxlength="20" inputmode="tel" placeholder="(81) 99999-9999">
       <label for="empresa">Empresa <small>(opcional)</small></label>
       <input id="empresa" name="empresa" autocomplete="organization" maxlength="120" placeholder="Nome da sua empresa">
+      <div id="ag" class="hide">
+        <div id="g-func"><label for="func">Quantas pessoas trabalham na empresa?</label>
+        <select id="func"><option value="">Escolha</option><option>Só eu</option><option>2 a 5</option><option>6 a 20</option><option>21 a 50</option><option>Mais de 50</option></select></div>
+        <div id="g-pub" class="hide"><label for="cargo">Seu cargo</label>
+        <input id="cargo" maxlength="80" placeholder="Ex.: Secretário de Administração, vereador">
+        <label for="mun">Município</label>
+        <input id="mun" maxlength="60" placeholder="Ex.: Carpina"></div>
+        <div class="row2"><div><label for="dia">Melhor dia para eu te chamar</label>
+        <input id="dia" type="date"></div>
+        <div><label for="per">Período</label>
+        <select id="per"><option>Manhã</option><option>Tarde</option></select></div></div>
+        <div class="nota" id="nota-dia"></div>
+      </div>
       <label class="ck"><input type="checkbox" id="ok"> Autorizo a Dedikar IA a me enviar este material e falar comigo por e-mail e WhatsApp. Posso pedir para sair quando quiser.</label>
       <button class="p" id="btn" type="submit">Quero receber</button>
       <div class="err" id="err" role="alert"></div>
@@ -81,7 +98,10 @@ button[disabled]{opacity:.6;cursor:wait}
     PROMPTS: { h:'o guia com os 6 prompts.', titulo:'6 prompts para passar trabalho para a IA', botao:'Abrir o guia (PDF)', url:'https://cdn.jsdelivr.net/gh/ottogurgel-wq/dedikar-midia@main/materiais/6_prompts_IA_Dedikar.pdf', texto:'Copie, cole e ajuste: mensagem difícil, resumo de reunião, proposta, respostas do WhatsApp, leitura da planilha de vendas e plano da semana.' },
     SEXTA: { h:'o modelo de fechamento da semana.', titulo:'Modelo de fechamento da semana', botao:'Abrir o modelo (PDF)', url:'https://cdn.jsdelivr.net/gh/ottogurgel-wq/dedikar-midia@main/materiais/Modelo_fechamento_semana_Dedikar.pdf', texto:'Os 3 passos para fechar a semana em 15 minutos e a folha para anotar o que ficou aberto, com prazo, primeiro passo e responsável.' },
     SITE: { h:'o seu diagnóstico.', titulo:'Um site que trabalha pela sua empresa', botao:'Agendar meu diagnóstico gratuito', url:site('site'), texto:'O próximo passo é uma conversa de 45 minutos comigo, sem custo, para ver o que o seu site precisa fazer: vender, agendar, explicar ou captar.' },
+    GOVERNANCA: { h:'o checklist de governança de IA.', titulo:'Checklist de governança de IA', botao:'Abrir o checklist', url:'https://materiais.dedikaria.com.br/governanca.html', texto:'As 5 perguntas para a sua empresa ter dono, regras e aprovação antes de a IA falar com o seu cliente. Dá para preencher na tela e salvar em PDF.' },
     PROJETO: { h:'o seu diagnóstico.', titulo:'Como isso pode funcionar na sua empresa', botao:'Agendar meu diagnóstico gratuito', url:site('projeto'), texto:'O próximo passo é uma conversa de 45 minutos comigo, sem custo, para entender a sua operação e mostrar o que faz sentido construir.' },
+    AUTOMATIZAR: { h:'o seu diagnóstico.', titulo:'Diagnóstico gratuito de automação', botao:'Conhecer a Dedikar', url:'https://dedikaria.com.br/?utm_source=instagram&utm_medium=alerta&utm_campaign=automatizar', texto:'', agenda:true },
+    GESTAO: { h:'o Raio-X da sua secretaria.', titulo:'Raio-X gratuito da sua secretaria', botao:'Conhecer a Dedikar', url:'https://dedikaria.com.br/?utm_source=instagram&utm_medium=alerta&utm_campaign=gestao', texto:'', agenda:true, publico:true },
     'DIAGNÓSTICO': { h:'o seu diagnóstico.', titulo:'Seu diagnóstico gratuito de 45 minutos', botao:'Escolher o melhor horário', url:site('diagnostico'), texto:'Escolha um horário. Antes da conversa eu te mando 2 minutinhos de perguntas para chegar preparado.' }
   };
   var q = new URLSearchParams(location.search);
@@ -92,6 +112,27 @@ button[disabled]{opacity:.6;cursor:wait}
   var slug = isca === 'DIAGNÓSTICO' ? 'diagnostico' : isca.toLowerCase();
   document.getElementById('h-mat').textContent = m.h;
   document.getElementById('kicker').textContent = 'Você comentou ' + isca;
+  var ORIG = q.get('utm_source') ? { s:q.get('utm_source'), m:q.get('utm_medium')||'anuncio', c:q.get('utm_campaign')||slug } : { s:'instagram', m:'dm', c:slug };
+  if (ORIG.m !== 'dm') document.getElementById('kicker').textContent = m.publico ? 'Alerta ao gestor público' : 'Alerta ao empresário';
+  var DIAS = ['domingo','segunda','terça','quarta','quinta','sexta','sábado'];
+  function iso(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+  function br(s){ var p=s.split('-'); return p[2]+'/'+p[1]; }
+  function minimo(){ var d=new Date(); d.setHours(12,0,0,0); var c=0; while(c<2){ d.setDate(d.getDate()+1); var w=d.getDay(); if(w!==0&&w!==6) c++; } return d; }
+  function ajusta(s){ var mn=minimo(); var d=s?new Date(s+'T12:00:00'):mn; if(isNaN(d)||d<mn) d=mn; while(d.getDay()===0||d.getDay()===6) d.setDate(d.getDate()+1); return iso(d); }
+  if (m.agenda) {
+    document.getElementById('ag').classList.remove('hide');
+    if (m.publico) { document.getElementById('g-func').classList.add('hide'); document.getElementById('g-pub').classList.remove('hide');
+      document.querySelector('label[for=empresa]').innerHTML = 'Prefeitura, câmara ou órgão'; document.getElementById('empresa').placeholder = 'Ex.: Prefeitura de Carpina'; }
+    else { document.querySelector('label[for=empresa]').innerHTML = 'Empresa'; }
+    document.querySelector('h1').innerHTML = m.publico ? 'Escolha o dia do <em>Raio-X da sua secretaria.</em>' : 'Escolha o dia do <em>seu diagnóstico gratuito.</em>';
+    document.getElementById('p-desc').textContent = 'Preencha e escolha o melhor dia. Eu te chamo no WhatsApp na data escolhida para marcar a conversa.';
+    document.getElementById('btn').textContent = 'Confirmar o dia';
+    var dia = document.getElementById('dia'), mn = iso(minimo());
+    dia.min = mn; dia.value = mn;
+    var nota = function(){ var v = ajusta(dia.value); if (v !== dia.value) dia.value = v; var d=new Date(v+'T12:00:00');
+      document.getElementById('nota-dia').textContent = 'Datas a partir de ' + br(mn) + ', de segunda a sexta. Escolhido: ' + DIAS[d.getDay()] + ', ' + br(v) + '.'; };
+    dia.addEventListener('change', nota); nota();
+  }
 
   function mostrar(nome){
     document.getElementById('passo1').classList.add('hide');
@@ -100,6 +141,10 @@ button[disabled]{opacity:.6;cursor:wait}
     document.getElementById('t2').textContent = m.titulo;
     document.getElementById('d2').textContent = m.texto;
     var a = document.getElementById('mat'); a.href = m.url; a.textContent = m.botao;
+    if (m.agenda) { var v = document.getElementById('dia').value, pr = document.getElementById('per').value.toLowerCase(), d = new Date(v+'T12:00:00');
+      document.getElementById('t2').textContent = 'Combinado: eu te chamo no WhatsApp na ' + DIAS[d.getDay()] + ', ' + br(v) + ', pela ' + pr + '.';
+      document.getElementById('d2').textContent = m.publico ? 'Na conversa eu faço o Raio-X da secretaria: onde está o trabalho repetido, quanto ele custa e o que dá para automatizar, dentro da Lei 14.133/2021.' : 'Na conversa eu olho a sua operação e mostro onde a automação tira trabalho repetido da equipe e quanto isso pode economizar. Sem custo.';
+      document.getElementById('agendar').classList.add('hide'); }
     var ag = document.getElementById('agendar');
     if (isca === 'PROJETO' || isca === 'DIAGNÓSTICO' || isca === 'SITE') ag.classList.add('hide'); else ag.href = site(slug);
     document.getElementById('wpp').href = WPP;
@@ -116,11 +161,17 @@ button[disabled]{opacity:.6;cursor:wait}
     if (nome.length < 2) { err.textContent = 'Escreva o seu nome.'; return; }
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { err.textContent = 'Confira o e-mail.'; return; }
     if (tel.length < 10 || tel.length > 13) { err.textContent = 'Coloque o WhatsApp com DDD.'; return; }
+    if (m.agenda && !m.publico && !document.getElementById('func').value) { err.textContent = 'Diga quantas pessoas trabalham na empresa.'; return; }
+    if (m.agenda && m.publico && (document.getElementById('cargo').value.trim().length < 2 || document.getElementById('mun').value.trim().length < 2)) { err.textContent = 'Preencha o seu cargo e o município.'; return; }
+    if (m.agenda && empresa.length < 2) { err.textContent = m.publico ? 'Diga a prefeitura ou o órgão.' : 'Diga o nome da empresa.'; return; }
     if (!document.getElementById('ok').checked) { err.textContent = 'Marque a autorização para receber o material.'; return; }
     if (tel.length <= 11) tel = '55' + tel;
     var btn = document.getElementById('btn'); btn.disabled = true; btn.textContent = 'Enviando...';
     var body = { p_nome: nome, p_telefone: '+' + tel, p_email: email, p_isca: isca,
-      p_extra: { empresa: empresa, utm_source: 'instagram', utm_medium: 'dm', utm_campaign: slug, pagina: 'materiais' } };
+      p_extra: { empresa: empresa, utm_source: ORIG.s, utm_medium: ORIG.m, utm_campaign: ORIG.c, pagina: 'materiais' } };
+    if (m.agenda) { body.p_extra.data_contato = ajusta(document.getElementById('dia').value); body.p_extra.periodo = document.getElementById('per').value;
+      if (m.publico) { body.p_extra.cargo = document.getElementById('cargo').value.trim(); body.p_extra.municipio = document.getElementById('mun').value.trim(); body.p_extra.segmento = 'Setor público'; }
+      else body.p_extra.funcionarios = document.getElementById('func').value; }
     fetch(SB, { method:'POST', headers:{ 'Content-Type':'application/json', 'apikey':KEY }, body: JSON.stringify(body) })
       .then(function(r){ if (!r.ok) return r.text().then(function(t){ throw new Error(t); }); mostrar(nome); })
       .catch(function(e){
@@ -129,7 +180,7 @@ button[disabled]{opacity:.6;cursor:wait}
         else if (/telefone/.test(t)) { err.textContent = 'Confira o WhatsApp com DDD.'; }
         else { mostrar(nome); } // nunca deixa o lead sem o material
       })
-      .finally(function(){ btn.disabled = false; btn.textContent = 'Quero receber'; });
+      .finally(function(){ btn.disabled = false; btn.textContent = m.agenda ? 'Confirmar o dia' : 'Quero receber'; });
   });
 })();
 </script>
