@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pré-diagnóstico · Dedikar IA</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,600&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0b10;--line:rgba(56,217,236,.35);--cyan:#38d9ec;--ink:#f1efe9;--muted:#c9cad2;--dim:#8e909c}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font-family:'DM Sans',Arial,sans-serif;display:flex;align-items:flex-start;justify-content:center;padding:28px 16px}
+body:before{content:"";position:fixed;inset:0;background:radial-gradient(circle at 18% 8%,rgba(56,217,236,.16),transparent 42%),radial-gradient(circle at 90% 90%,rgba(56,217,236,.08),transparent 40%),radial-gradient(rgba(56,217,236,.18) 1px,transparent 1.4px) 0 0/26px 26px;pointer-events:none;opacity:.9}
+.c{position:relative;max-width:560px;width:100%;background:rgba(21,23,34,.94);border:1.5px solid var(--line);border-radius:24px;padding:28px 24px;box-shadow:0 0 70px rgba(56,217,236,.12)}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.brand .t{width:42px;height:42px;border-radius:12px;background:#fff;overflow:hidden;box-shadow:0 0 0 2px rgba(56,217,236,.35)}
+.brand .t img{width:42px;height:42px;object-fit:contain}
+.brand b{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600}.brand b span{color:var(--cyan)}
+.k{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);margin-bottom:10px}
+h1{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:34px;line-height:1.05;margin:0 0 10px;color:#f6f4ee}h1 em{color:var(--cyan)}
+h2{font-size:19px;margin:4px 0 4px}
+p{color:var(--muted);font-size:16px;line-height:1.5;margin:0 0 14px}
+label{display:block;font-size:15px;font-weight:500;margin:16px 0 7px}
+label small{color:var(--dim);font-weight:400}
+input,select,textarea{width:100%;background:#0f1119;border:1.5px solid var(--line);border-radius:12px;padding:13px;font:inherit;font-size:16px;color:var(--ink);outline:none}
+textarea{min-height:92px;resize:vertical}
+input:focus,select:focus,textarea:focus{border-color:var(--cyan)}
+.op{display:flex;flex-wrap:wrap;gap:8px}
+.op button{width:auto;flex:0 1 auto;margin:0;padding:10px 14px;border-radius:999px;background:#0f1119;border:1.5px solid var(--line)!important;color:var(--muted);font-weight:500;font-size:14.5px}
+.op button.on{background:rgba(56,217,236,.16);border-color:var(--cyan)!important;color:#fff}
+.segs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+.segs button{margin:0;padding:14px 12px;border-radius:14px;background:#0f1119;border:1.5px solid var(--line)!important;color:var(--ink);font-weight:500;font-size:15px;text-align:left;line-height:1.25}
+.segs button small{display:block;color:var(--dim);font-weight:400;font-size:12.5px;margin-top:3px}
+.segs button.on{background:rgba(56,217,236,.16);border-color:var(--cyan)!important}
+button{display:block;width:100%;text-align:center;font:inherit;font-weight:700;font-size:16px;border-radius:999px;padding:15px 20px;margin:10px 0 0;cursor:pointer;border:0}
+.p{background:var(--cyan);color:#061015;box-shadow:0 14px 44px rgba(56,217,236,.3)}
+.s{background:transparent;border:1.5px solid rgba(56,217,236,.5)!important;color:var(--cyan)}
+.nav{display:flex;gap:10px;margin-top:20px}.nav button{margin:0}
+button[disabled]{opacity:.6;cursor:wait}
+.bar{height:6px;background:#0f1119;border-radius:9px;overflow:hidden;margin:4px 0 18px}.bar i{display:block;height:100%;width:0;background:var(--cyan);transition:width .3s}
+.err{color:#ff8a8a;font-size:14px;margin-top:10px;min-height:1em}
+.f{font-size:12px;color:var(--dim);margin-top:18px;text-align:center}
+.hide{display:none}
+.ok{font-size:44px;margin:4px 0 8px}
+</style>
+</head>
+<body>
+<main class="c">
+  <div class="brand"><div class="t"><img src="logo.png" alt=""></div><b>Dedikar <span>IA</span></b></div>
+
+  <section id="carregando"><p>Carregando…</p></section>
+
+  <section id="invalido" class="hide">
+    <div class="k">Pré-diagnóstico</div>
+    <h1>Link <em>expirado</em></h1>
+    <p>Não encontrei a sua reunião por este link. Me chame no WhatsApp que eu te mando outro.</p>
+    <a href="https://wa.me/5581991082411" style="text-decoration:none"><button class="p">Falar com o Otto no WhatsApp</button></a>
+  </section>
+
+  <section id="feito" class="hide">
+    <div class="ok">✅</div>
+    <h1>Tudo <em>pronto</em>!</h1>
+    <p id="feitoTxt">Recebi suas respostas. Vou chegar na reunião já com o caminho desenhado para a sua empresa, para o nosso tempo render em decisão e não em perguntas.</p>
+    <p>Qualquer coisa antes, é só me chamar: <a href="https://wa.me/5581991082411" style="color:var(--cyan)">(81) 99108-2411</a>.</p>
+    <p style="margin-top:18px">Até breve,<br><b style="color:#fff">Otto Gurgel</b> · Dedikar IA</p>
+  </section>
+
+  <form id="f" class="hide" onsubmit="return false">
+    <div class="k" id="kicker">Pré-diagnóstico · 3 minutos</div>
+    <h1 id="titulo">Vamos preparar a <em>sua reunião</em></h1>
+    <p id="sub">Com estas respostas eu chego no diagnóstico já sabendo onde dá para ganhar tempo e dinheiro na sua empresa.</p>
+    <div class="bar"><i id="barra"></i></div>
+
+    <!-- 1. Segmento -->
+    <div class="st" data-st="1">
+      <h2>Qual é o seu tipo de negócio?</h2>
+      <div class="segs" id="segs"></div>
+      <div id="segOutroBox" class="hide"><label>Qual o segmento?</label><input id="segOutro" maxlength="60" placeholder="Ex.: escola de idiomas, transportadora…"></div>
+    </div>
+
+    <!-- 2. Empresa -->
+    <div class="st hide" data-st="2">
+      <h2>Sobre a empresa</h2>
+      <label id="lEmpresa">Nome da empresa</label><input id="empresa" maxlength="120">
+      <label>Seu cargo</label><div class="op" data-campo="cargo"></div>
+      <label>Quem decide a contratação de uma solução como essa?</label><div class="op" data-campo="decisor"></div>
+      <label id="lFunc">Quantas pessoas trabalham na empresa?</label><div class="op" data-campo="funcionarios"></div>
+      <div id="boxFat"><label>Faturamento anual aproximado <small>(opcional)</small></label><div class="op" data-campo="faturamento"></div></div>
+    </div>
+
+    <!-- 3. Operação -->
+    <div class="st hide" data-st="3">
+      <h2 id="h3">Como funciona hoje</h2>
+      <label id="lCanais">Por onde os clientes chegam? <small>(marque todos)</small></label><div class="op multi" data-campo="canais"></div>
+      <label id="lVol">Quantos contatos/pedidos de orçamento chegam por mês?</label><div class="op" data-campo="volume"></div>
+      <label>Quanto tempo vocês levam, em média, para responder?</label><div class="op" data-campo="tempo_resposta"></div>
+      <div id="especificas"></div>
+      <label>Que sistemas ou ferramentas vocês usam hoje? <small>(CRM, ERP, planilha, nenhum…)</small></label><input id="ferramentas" maxlength="400">
+      <label>Já usam alguma inteligência artificial?</label><div class="op" data-campo="uso_ia"></div>
+    </div>
+
+    <!-- 4. Dor e prioridade -->
+    <div class="st hide" data-st="4">
+      <h2>Onde dói mais</h2>
+      <label>Qual é o maior gargalo hoje?</label><div class="op" data-campo="gargalo"></div>
+      <label>Conte em poucas palavras o principal desafio <small>(obrigatório)</small></label><textarea id="desafio" maxlength="1500" placeholder="Ex.: perdemos clientes porque ninguém responde à noite; tudo é controlado em planilha…"></textarea>
+      <label>Quando você quer resolver isso?</label><div class="op" data-campo="urgencia"></div>
+      <label>Quanto faz sentido investir por mês para resolver? <small>(ajuda a eu trazer a opção certa)</small></label><div class="op" data-campo="investimento"></div>
+      <label>O que precisa sair da reunião para valer a pena? <small>(opcional)</small></label><textarea id="expectativa" maxlength="800" style="min-height:70px"></textarea>
+      <label>Site ou Instagram da empresa <small>(opcional)</small></label><input id="site" maxlength="160" placeholder="@suaempresa ou site.com.br">
+    </div>
+
+    <div class="err" id="err"></div>
+    <div class="nav"><button type="button" class="s hide" id="voltar">Voltar</button><button type="button" class="p" id="avancar">Continuar</button></div>
+    <div class="f">Suas respostas ficam só com a Dedikar IA e servem para preparar a reunião (LGPD).</div>
+  </form>
+</main>
+<script>
+(function(){
+  var KEY = 'sb_publishable_R9fbFwG2aZi0oSBZyJHImQ_H1B5595g';
+  var RPC = 'https://otgdltjieatubbkuhpoj.supabase.co/rest/v1/rpc/';
+  var q = new URLSearchParams(location.search);
+  var D = q.get('d'), K = q.get('k');
+  var $ = function(id){ return document.getElementById(id); };
+  function show(id){ ['carregando','invalido','feito','f'].forEach(function(x){ $(x).classList.toggle('hide', x !== id); }); }
+  function rpc(fn, body){ return fetch(RPC + fn, { method:'POST', headers:{ 'Content-Type':'application/json', 'apikey':KEY, 'Authorization':'Bearer ' + KEY }, body: JSON.stringify(body) }).then(function(r){ return r.json().then(function(j){ if (!r.ok) throw new Error(j && j.message || 'erro'); return j; }); }); }
+
+  var SEGS = [
+    { id:'locadora', nome:'Locadora de veículos', d:'carros, motos, utilitários' },
+    { id:'comercio', nome:'Comércio / loja', d:'varejo, atacado, e-commerce' },
+    { id:'saude_servicos', nome:'Clínica, saúde ou serviços', d:'consultório, estética, academia, oficina' },
+    { id:'b2b', nome:'Vendo para empresas', d:'indústria, distribuidora, serviços B2B' },
+    { id:'hospedagem', nome:'Hospedagem ou imóveis', d:'pousada, aluguel por temporada, imobiliária' },
+    { id:'juridico_contabil', nome:'Escritório', d:'advocacia, contabilidade, consultoria' },
+    { id:'publico', nome:'Órgão público', d:'prefeitura, câmara, secretaria, autarquia' },
+    { id:'outro', nome:'Outro', d:'me conta qual' }
+  ];
+  var OP = {
+    cargo: ['Sócio / proprietário','CEO / diretor geral','Diretor(a)','Gerente','Coordenador(a)','Analista / equipe'],
+    decisor: ['Sim, eu decido','Decido com sócio(s)','Outra pessoa decide'],
+    funcionarios: ['1 a 10','11 a 50','51 a 200','201 a 500','Mais de 500'],
+    faturamento: ['Até R$ 360 mil','R$ 360 mil a 4,8 mi','R$ 4,8 a 30 mi','Acima de R$ 30 mi','Prefiro não dizer'],
+    canais: ['WhatsApp','Instagram','Site','Google','Indicação','Telefone','Loja / balcão','Marketplace','Representantes / vendedores','Licitação'],
+    volume: ['Até 30','31 a 100','101 a 300','Mais de 300','Não sei'],
+    tempo_resposta: ['Na hora (até 5 min)','Até 1 hora','Mais de 1 hora','No outro dia ou mais','Não sei'],
+    uso_ia: ['Ainda não','Uso o ChatGPT por conta própria','Já temos algo rodando'],
+    gargalo: [['atendimento','Atendimento: demora, mensagem sem resposta'],['vendas','Vendas: lead esquecido, sem follow-up'],['clientes_novos','Falta de clientes novos'],['controle','Controle: não vejo números, tudo em planilha'],['processos','Processos manuais que tomam tempo'],['digital','Presença digital: site/Instagram não geram contato'],['nao_sei','Não sei por onde começar']],
+    urgencia: ['Este mês','Nos próximos 3 meses','Ainda este ano','Só pesquisando'],
+    investimento: ['Até R$ 500/mês','R$ 500 a 2 mil/mês','R$ 2 a 5 mil/mês','Acima de R$ 5 mil/mês','Prefiro conversar na reunião']
+  };
+  // perguntas por segmento (vão para o CRM com o texto da pergunta)
+  var ESP = {
+    locadora: [
+      ['Tamanho da frota', ['Até 20','21 a 50','51 a 150','Mais de 150']],
+      ['Aluga para empresas (contratos mensais/anuais)?', ['Sim, é forte','Sim, um pouco','Não']],
+      ['Como sai a cotação hoje?', ['Manual no WhatsApp','Pelo sistema','Pelo site','Mistura de tudo']],
+      ['Cobrança de avarias e multas', ['Manual','No sistema','Perdemos muito dinheiro aí']],
+      ['Controle da frota (manutenção, carro parado)', ['Planilha','Sistema','Rastreador','Na cabeça']]
+    ],
+    comercio: [
+      ['Onde mais vende?', ['Loja física','WhatsApp','Instagram','Site / e-commerce','Marketplace']],
+      ['Faz pós-venda / recompra ativa?', ['Sim','Às vezes','Não']],
+      ['Estoque e vendas estão integrados?', ['Sim','Em parte','Não']]
+    ],
+    saude_servicos: [
+      ['Como os clientes agendam?', ['WhatsApp manual','Sistema de agenda','Telefone','Link online']],
+      ['Faltas e desmarcações', ['Quase não tem','Algumas por semana','Muitas, dói no caixa']],
+      ['Confirma os horários antes?', ['Sim, manual','Sim, automático','Não']]
+    ],
+    b2b: [
+      ['Como gera clientes novos hoje?', ['Indicação','Vendedores / representantes','Prospecção ativa','Marketing digital','Licitações']],
+      ['Ticket médio de uma venda', ['Até R$ 5 mil','R$ 5 a 50 mil','Acima de R$ 50 mil']],
+      ['Ciclo de venda', ['Até 1 semana','1 a 4 semanas','Mais de 1 mês']]
+    ],
+    hospedagem: [
+      ['Quantas unidades / imóveis?', ['Até 5','6 a 20','21 a 60','Mais de 60']],
+      ['Por onde vêm as reservas?', ['Airbnb / Booking','Direto no WhatsApp','Site próprio','Imobiliária / corretores']],
+      ['Responde hóspedes fora do horário?', ['Sim, sempre','Às vezes','Não']]
+    ],
+    juridico_contabil: [
+      ['Clientes ativos', ['Até 30','31 a 150','Mais de 150']],
+      ['Como chegam clientes novos?', ['Indicação','Instagram / Google','Parcerias','Prospecção']],
+      ['O que mais toma tempo da equipe?', ['Responder dúvidas repetidas','Prazos e documentos','Cobrança','Relatórios para clientes']]
+    ],
+    publico: [
+      ['Tipo de órgão', ['Prefeitura','Câmara','Secretaria','Autarquia / fundação','Outro']],
+      ['Área que mais precisa de apoio', ['Atendimento ao cidadão','Processos internos / protocolo','Saúde','Educação','Finanças / arrecadação','Gestão e indicadores']],
+      ['Atende o cidadão pelo WhatsApp?', ['Sim, manual','Sim, com robô','Não']],
+      ['Forma de contratação mais viável', ['Dispensa','Licitação','Adesão a ata','Ainda não sei']]
+    ],
+    outro: [
+      ['Como os clientes compram de vocês?', ['WhatsApp','Loja','Site','Vendedor','Contrato']]
+    ]
+  };
+
+  var R = { canais: [], extra: {} }, seg = null, passo = 1, info = {};
+
+  function chips(box, campo, lista, multi, alvo){
+    box.innerHTML = '';
+    lista.forEach(function(it){
+      var val = Array.isArray(it) ? it[0] : it, txt = Array.isArray(it) ? it[1] : it;
+      var b = document.createElement('button'); b.type = 'button'; b.textContent = txt;
+      b.onclick = function(){
+        var dest = alvo || R;
+        if (multi) { var a = dest[campo] || (dest[campo] = []); var i = a.indexOf(val); if (i < 0) a.push(val); else a.splice(i, 1); b.classList.toggle('on'); }
+        else { dest[campo] = val; if (campo === 'gargalo') R.gargalo_txt = txt; Array.prototype.forEach.call(box.children, function(x){ x.classList.remove('on'); }); b.classList.add('on'); }
+      };
+      box.appendChild(b);
+    });
+  }
+  document.querySelectorAll('.op[data-campo]').forEach(function(box){ var c = box.getAttribute('data-campo'); chips(box, c, OP[c], box.classList.contains('multi')); });
+
+  SEGS.forEach(function(s){
+    var b = document.createElement('button'); b.type = 'button'; b.innerHTML = s.nome + '<small>' + s.d + '</small>';
+    b.onclick = function(){ seg = s.id; Array.prototype.forEach.call($('segs').children, function(x){ x.classList.remove('on'); }); b.classList.add('on'); $('segOutroBox').classList.toggle('hide', s.id !== 'outro'); };
+    $('segs').appendChild(b);
+  });
+
+  function montarEspecificas(){
+    var box = $('especificas'); box.innerHTML = ''; R.extra = {};
+    (ESP[seg] || []).forEach(function(p){
+      var l = document.createElement('label'); l.textContent = p[0]; box.appendChild(l);
+      var d = document.createElement('div'); d.className = 'op'; box.appendChild(d);
+      chips(d, p[0], p[1], false, R.extra);
+    });
+    var pub = seg === 'publico';
+    $('boxFat').classList.toggle('hide', pub);
+    $('lEmpresa').textContent = pub ? 'Nome do órgão' : 'Nome da empresa';
+    $('lFunc').textContent = pub ? 'Quantos servidores no órgão?' : 'Quantas pessoas trabalham na empresa?';
+    $('lCanais').innerHTML = pub ? 'Por onde o cidadão chega até vocês? <small>(marque todos)</small>' : 'Por onde os clientes chegam? <small>(marque todos)</small>';
+    $('lVol').textContent = pub ? 'Quantos atendimentos/solicitações por mês?' : 'Quantos contatos/pedidos de orçamento chegam por mês?';
+    chips(document.querySelector('[data-campo=cargo]'), 'cargo', pub ? ['Prefeito(a) / gestor(a) do órgão','Secretário(a)','Vereador(a)','Diretor(a)','Coordenador(a)','Servidor(a) / assessor(a)'] : OP.cargo, false);
+    chips(document.querySelector('[data-campo=investimento]'), 'investimento', pub ? ['Ainda não há orçamento','Há orçamento este ano','Prefiro conversar na reunião'] : OP.investimento, false);
+  }
+
+  function ir(n){
+    passo = n; $('err').textContent = '';
+    document.querySelectorAll('.st').forEach(function(s){ s.classList.toggle('hide', +s.getAttribute('data-st') !== n); });
+    $('voltar').classList.toggle('hide', n === 1);
+    $('avancar').textContent = n === 4 ? 'Enviar respostas' : 'Continuar';
+    $('barra').style.width = (n * 25) + '%';
+    window.scrollTo(0, 0);
+  }
+  $('voltar').onclick = function(){ ir(passo - 1); };
+  $('avancar').onclick = function(){
+    if (passo === 1) {
+      if (!seg) { $('err').textContent = 'Escolha o tipo de negócio.'; return; }
+      if (seg === 'outro' && $('segOutro').value.trim().length < 2) { $('err').textContent = 'Conte qual é o segmento.'; return; }
+      montarEspecificas(); return ir(2);
+    }
+    if (passo === 2) {
+      if ($('empresa').value.trim().length < 2) { $('err').textContent = 'Informe o nome.'; return; }
+      if (!R.decisor) { $('err').textContent = 'Diga quem decide (ajuda a eu preparar a proposta certa).'; return; }
+      return ir(3);
+    }
+    if (passo === 3) return ir(4);
+    if ($('desafio').value.trim().length < 3) { $('err').textContent = 'Conte o principal desafio.'; return; }
+    if (!R.gargalo) { $('err').textContent = 'Escolha o maior gargalo.'; return; }
+    var s = SEGS.filter(function(x){ return x.id === seg; })[0];
+    var body = Object.assign({}, R, {
+      seg: seg, segmento: seg === 'outro' ? $('segOutro').value.trim() : s.nome,
+      empresa: $('empresa').value.trim(), ferramentas: $('ferramentas').value.trim(),
+      desafio: $('desafio').value.trim(), expectativa: $('expectativa').value.trim(), site: $('site').value.trim()
+    });
+    var b = $('avancar'); b.disabled = true; b.textContent = 'Enviando…';
+    rpc('pre_diag_responder', { p_ref: D, p_k: K, p_r: body }).then(function(){ show('feito'); })
+      .catch(function(){ b.disabled = false; b.textContent = 'Enviar respostas'; $('err').textContent = 'Não consegui enviar. Tente de novo ou me chame no WhatsApp (81) 99108-2411.'; });
+  };
+
+  if (!D || !K) { show('invalido'); return; }
+  rpc('pre_diag_info', { p_ref: D, p_k: K }).then(function(j){
+    info = j || {};
+    if (!info.ok) return show('invalido');
+    if (info.respondido) { $('feitoTxt').textContent = 'Você já respondeu o pré-diagnóstico. Obrigado! Nos vemos na reunião.'; return show('feito'); }
+    if (info.nome) $('titulo').innerHTML = info.nome + ', vamos preparar a <em>sua reunião</em>';
+    if (info.reuniao) {
+      var d = new Date(info.reuniao);
+      var dias = ['domingo','segunda','terça','quarta','quinta','sexta','sábado'];
+      $('kicker').textContent = 'Diagnóstico · ' + dias[d.getDay()] + ' ' + d.toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit' }) + ' às ' + d.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' });
+    }
+    if (info.empresa) $('empresa').value = info.empresa;
+    var sg = String(info.segmento || '').toLowerCase();
+    var pre = /locad/.test(sg) ? 'locadora' : /prefeit|c[aâ]mara|secret|p[uú]blic|munic/.test(sg) ? 'publico' : /pousad|hotel|temporada|im[oó]v/.test(sg) ? 'hospedagem' : /advoc|cont[aá]b/.test(sg) ? 'juridico_contabil' : /cl[ií]nic|sa[uú]de|est[eé]tic|odonto/.test(sg) ? 'saude_servicos' : null;
+    if (pre) { var i = SEGS.map(function(x){ return x.id; }).indexOf(pre); if (i >= 0) $('segs').children[i].click(); }
+    show('f'); ir(1);
+  }).catch(function(){ show('invalido'); });
+})();
+</script>
+</body>
+</html>
