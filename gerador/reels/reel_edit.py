@@ -20,6 +20,24 @@ def montar_base(clip,segs,out,zooms=(),vfim=None):
     run(['ffmpeg','-v','error','-y','-ss',str(a),'-to',str(b),'-i',src,'-vf',vf,'-af','highpass=f=80,loudnorm=I=-15:TP=-1.5:LRA=9,afade=t=out:st='+str(round(b-a-0.08,2))+':d=0.08','-ar','48000','-c:v','libx264','-preset','veryfast','-crf','17','-c:a','aac','-b:a','192k',out])
     W=[{'w':fix(w['w']),'s':round(w['s']-a,2),'e':round(min(w['e'],b)-a,2)} for w in C[clip]['palavras'] if a<=w['s']<b]
     return W,b-a
+def montar_multi(cortes,out):
+    """cortes: lista de (clip, inicio, fim, zoom). Uma passada: vídeo e áudio cortados juntos, zoom diferente em cada corte."""
+    ins=[];fc=[];vlab=[];W=[];off=0
+    srcs=[]
+    for c,a,b,z in cortes:
+        if c not in srcs: srcs.append(c)
+    for c in srcs: ins+=['-i',str(RAW/C[c]['arquivo'])]
+    for k,(c,a,b,z) in enumerate(cortes):
+        n=srcs.index(c)
+        fc.append(f"[{n}:v]trim={a}:{b},setpts=PTS-STARTPTS,scale=1080:1920:flags=lanczos,unsharp=5:5:0.6,eq=contrast=1.04:saturation=1.06,scale={int(1080*z)//2*2}:{int(1920*z)//2*2}:flags=lanczos,crop=1080:1920:(iw-1080)/2:(ih-1920)*0.30,fps=30,setsar=1[v{k}]")
+        fc.append(f"[{n}:a]atrim={a}:{b},asetpts=PTS-STARTPTS,afade=t=in:d=0.03,afade=t=out:st={b-a-0.05:.2f}:d=0.05[a{k}]")
+        vlab.append(f'[v{k}][a{k}]')
+        for w in C[c]['palavras']:
+            if a<=w['s']<b: W.append({'w':fix(w['w']),'s':round(w['s']-a+off,2),'e':round(min(w['e'],b)-a+off,2)})
+        off+=b-a
+    fc.append(''.join(vlab)+f'concat=n={len(cortes)}:v=1:a=1[vv][aa];[aa]highpass=f=80,loudnorm=I=-15:TP=-1.5:LRA=9[ao]')
+    run(['ffmpeg','-v','error','-y',*ins,'-filter_complex',';'.join(fc),'-map','[vv]','-map','[ao]','-ar','48000','-c:v','libx264','-preset','veryfast','-crf','17','-c:a','aac','-b:a','192k',out])
+    return W,off
 def grupos(W,maxw=3):
     G=[];cur=[]
     for w in W:
@@ -65,7 +83,7 @@ for(const a of q){{x.fillStyle='rgba(56,217,236,.6)';x.beginPath();x.arc(a[0],a[
 const pl=document.getElementById('e3');pl.style.boxShadow='0 0 '+(70+40*Math.sin(t*3))+'px rgba(56,217,236,.6)';}}</script></body></html>"""
 def editar(nome,cfg):
     out=R/'out'/nome; out.mkdir(parents=True,exist_ok=True)
-    base=str(out/'_base.mp4'); W,dur=montar_base(cfg['clip'],cfg['segs'],base,cfg.get('zooms',()),cfg.get('vfim'))
+    base=str(out/'_base.mp4'); W,dur=montar_multi(cfg['cortes'],base) if 'cortes' in cfg else montar_base(cfg['clip'],cfg['segs'],base,cfg.get('zooms',()),cfg.get('vfim'))
     G=grupos(W); (out/'legenda.json').write_text(json.dumps(W,ensure_ascii=False))
     fr=R/'_fr'; shutil.rmtree(fr,ignore_errors=True); fr.mkdir()
     asyncio.run(frames(html_overlay(cfg,G,dur),dur,fr))

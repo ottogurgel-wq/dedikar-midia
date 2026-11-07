@@ -21,5 +21,6 @@ J={
  dict(t='Salve e use',html='<div class=h>Salve para a <i>próxima conversa.</i></div><div class=p>E envie para quem lidera time com você.</div>',sfx='riser_suave'),
 ]),
 }
-for n in sys.argv[1:] or list(J):
+if __name__=="__main__":
+ for n in sys.argv[1:] or list(J):
     tema,voz,c=J[n]; fazer(n,tema,voz,c)
