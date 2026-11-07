@@ -17,13 +17,14 @@ h1 i,h2 i,.g{background-size:250% 100%!important;animation:shine 4.5s linear inf
 """
 ANIM_JS="""<script>
 (function(){
+const OG=document.body.dataset.tema==='og';
 const cv=document.getElementById('c');cv.width=1080;cv.height=1350;const x=cv.getContext('2d');let s=SEED;const r=()=>{s=(s*16807)%2147483647;return s/2147483647};
 const p=[];for(let i=0;i<75;i++)p.push([r()*1080,r()*1350,r()*6.28,10+r()*22,r()>.5]);
 window.drawBG=function(t){x.clearRect(0,0,1080,1350);const w=2*Math.PI*t/DUR;
  const q=p.map(a=>[a[0]+Math.cos(w+a[2])*a[3],a[1]+Math.sin(w+a[2])*a[3],a[4]]);x.lineWidth=1;
- for(const a of q)for(const b of q){const d=Math.hypot(a[0]-b[0],a[1]-b[1]);if(d>0&&d<180){x.strokeStyle='rgba(56,217,236,'+(.16*(1-d/180))+')';x.beginPath();x.moveTo(a[0],a[1]);x.lineTo(b[0],b[1]);x.stroke()}}
- for(const a of q){x.fillStyle=a[2]?'rgba(56,217,236,.6)':'rgba(122,162,255,.5)';x.beginPath();x.arc(a[0],a[1],2.6,0,7);x.fill()}
- x.fillStyle='rgba(255,255,255,.03)';for(let i=0;i<1080;i+=36)for(let j=0;j<1350;j+=36)x.fillRect(i,j,2,2);};
+ for(const a of q)for(const b of q){const d=Math.hypot(a[0]-b[0],a[1]-b[1]);if(d>0&&d<180){x.strokeStyle=OG?'rgba(80,150,255,'+(.28*(1-d/180))+')':'rgba(56,217,236,'+(.16*(1-d/180))+')';x.beginPath();x.moveTo(a[0],a[1]);x.lineTo(b[0],b[1]);x.stroke()}}
+ for(const a of q){if(OG){x.shadowColor='#4fa8ff';x.shadowBlur=12;x.fillStyle='rgba(140,200,255,.85)'}else{x.fillStyle=a[2]?'rgba(56,217,236,.6)':'rgba(122,162,255,.5)'};x.beginPath();x.arc(a[0],a[1],2.6,0,7);x.fill()}x.shadowBlur=0;
+ if(!OG){x.fillStyle='rgba(255,255,255,.03)';for(let i=0;i<1080;i+=36)for(let j=0;j<1350;j+=36)x.fillRect(i,j,2,2);}};
 const capa=CAPA;let k=0;
 if(!capa){document.querySelectorAll('.main > *').forEach(el=>{
  if(el.querySelector(':scope > .card')){el.querySelectorAll(':scope > .card').forEach(c=>{c.classList.add('ent');c.style.animationDelay=(0.35+0.55*k++)+'s'})}
@@ -35,6 +36,7 @@ window.setT=function(t){drawBG(t);document.getAnimations().forEach(a=>{a.pause()
 def animar(html,capa,seed):
     html=html.replace('</style>',ANIM_CSS+'</style>')
     html=re.sub(r'<script>const c=.*?</script>','',html,flags=re.S)
+    html=html.replace('h1 i,h2 i,.g{background-size','h1 i,h2 i,.g{background-size')
     return html.replace('</body>',ANIM_JS.replace('SEED',str(seed)).replace('DUR',str(DUR)).replace('CAPA','true' if capa else 'false')+'</body>')
 async def _rec(jobs):
     async with async_playwright() as pw:
