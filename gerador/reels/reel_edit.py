@@ -9,20 +9,17 @@ def fix(w):
     for a,b in FIX: w=re.sub(a,b,w)
     return w
 def run(a): subprocess.run(a,check=True)
-def montar_base(clip,segs,out):
-    src=str(RAW/C[clip]['arquivo']); parts=[]
-    for j,(a,b) in enumerate(segs):
-        p=R/f'_seg{j}.mp4'; parts.append(p)
-        run(['ffmpeg','-v','error','-y','-ss',str(a),'-to',str(b),'-i',src,'-vf','scale=1080:1920:flags=lanczos,unsharp=5:5:0.6,eq=contrast=1.04:saturation=1.06,fps=30','-af','highpass=f=80,loudnorm=I=-15:TP=-1.5:LRA=9','-ar','48000','-c:v','libx264','-preset','veryfast','-crf','17','-c:a','aac','-b:a','192k',str(p)])
-    (R/'_l.txt').write_text(''.join(f"file '{p}'\n" for p in parts))
-    run(['ffmpeg','-v','error','-y','-f','concat','-safe','0','-i',str(R/'_l.txt'),'-c','copy',out])
-    # palavras com tempo remapeado
-    W=[];off=0
-    for a,b in segs:
-        for w in C[clip]['palavras']:
-            if a<=w['s']<b: W.append({'w':fix(w['w']),'s':round(w['s']-a+off,2),'e':round(min(w['e'],b)-a+off,2)})
-        off+=b-a
-    return W,off
+def montar_base(clip,segs,out,zooms=(),vfim=None):
+    (a,b),=segs
+    src=str(RAW/C[clip]['arquivo'])
+    cond='+'.join(f'between(t,{z0-a:.2f},{z1-a:.2f})' for z0,z1 in zooms) or '0'
+    vf=(f"scale=1080:1920:flags=lanczos,unsharp=5:5:0.6,eq=contrast=1.04:saturation=1.06,"
+        f"scale=w='1080*(1+0.12*gt({cond},0))':h='1920*(1+0.12*gt({cond},0))':eval=frame:flags=lanczos,"
+        f"crop=1080:1920:x='(iw-1080)/2':y='(ih-1920)*0.30',fps=30")
+    if vfim: vf+=f",trim=end={vfim-a:.2f},setpts=PTS-STARTPTS,tpad=stop_mode=clone:stop_duration={b-vfim:.2f}"
+    run(['ffmpeg','-v','error','-y','-ss',str(a),'-to',str(b),'-i',src,'-vf',vf,'-af','highpass=f=80,loudnorm=I=-15:TP=-1.5:LRA=9,afade=t=out:st='+str(round(b-a-0.08,2))+':d=0.08','-ar','48000','-c:v','libx264','-preset','veryfast','-crf','17','-c:a','aac','-b:a','192k',out])
+    W=[{'w':fix(w['w']),'s':round(w['s']-a,2),'e':round(min(w['e'],b)-a,2)} for w in C[clip]['palavras'] if a<=w['s']<b]
+    return W,b-a
 def grupos(W,maxw=3):
     G=[];cur=[]
     for w in W:
@@ -68,7 +65,7 @@ for(const a of q){{x.fillStyle='rgba(56,217,236,.6)';x.beginPath();x.arc(a[0],a[
 const pl=document.getElementById('e3');pl.style.boxShadow='0 0 '+(70+40*Math.sin(t*3))+'px rgba(56,217,236,.6)';}}</script></body></html>"""
 def editar(nome,cfg):
     out=R/'out'/nome; out.mkdir(parents=True,exist_ok=True)
-    base=str(out/'_base.mp4'); W,dur=montar_base(cfg['clip'],cfg['segs'],base)
+    base=str(out/'_base.mp4'); W,dur=montar_base(cfg['clip'],cfg['segs'],base,cfg.get('zooms',()),cfg.get('vfim'))
     G=grupos(W); (out/'legenda.json').write_text(json.dumps(W,ensure_ascii=False))
     fr=R/'_fr'; shutil.rmtree(fr,ignore_errors=True); fr.mkdir()
     asyncio.run(frames(html_overlay(cfg,G,dur),dur,fr))
@@ -85,11 +82,11 @@ def editar(nome,cfg):
     (R/'_l.txt').write_text(f"file '{mainv}'\nfile '{endv}'\n")
     juntos=str(out/'_juntos.mp4')
     run(['ffmpeg','-v','error','-y','-f','concat','-safe','0','-i',str(R/'_l.txt'),'-c:v','libx264','-preset','veryfast','-crf','18','-c:a','aac',juntos])
-    # efeitos
-    ev=[('whoosh_entrada',0.0,.5),('impacto_titulo',0.1,.45)]+[('nota_vidro' if k%2 else 'pop_card',c['t'],.45) for k,c in enumerate(cfg['chips'])]
-    ev+=[('digitacao_etiqueta',cfg.get('lt',[2.8])[0],.3),('riser_suave',dur-1.6,.35),('whoosh_entrada',dur-0.1,.45),('chime_cta',dur+0.8,.6)]
+    # efeitos (desenho próprio de cada reels)
+    ev=[(n,(dur+float(t[3:]) if isinstance(t,str) else t),v) for n,t,v in cfg['sfx']]
+    ev=[(n,t,v) for n,t,v in ev]
     a=['ffmpeg','-v','error','-y','-i',juntos]
-    for n,_,_ in ev: a+=['-i',SFX+n+'.mp3']
+    for n,_,_ in ev: a+=['-i','/home/claude/sfx_norm/'+n+'.wav']
     f=[f'[{j+1}:a]adelay={int(t*1000)}|{int(t*1000)},volume={v}[a{j}]' for j,(n,t,v) in enumerate(ev)]
     f.append('[0:a]'+''.join(f'[a{j}]' for j in range(len(ev)))+f'amix=inputs={len(ev)+1}:normalize=0[o]')
     final=str(out/f'Reel_{nome}.mp4')
