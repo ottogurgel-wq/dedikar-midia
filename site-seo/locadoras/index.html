@@ -36,6 +36,7 @@
   .faq details[open] summary::after{content:"–"}
   .faq details p{margin:0;padding:0 22px 20px}
   .tag-novo{display:inline-block;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:999px;border:1px solid currentColor;opacity:.75;margin-left:6px;vertical-align:middle}
+  .lk-calc{margin-top:auto;padding-top:6px;font-weight:600;color:var(--ac)}
 </style>
 <script type="application/ld+json">
 {
@@ -68,7 +69,7 @@
         { "@type": "Question", "name": "Preciso trocar o sistema que a minha locadora já usa?", "acceptedAnswer": { "@type": "Answer", "text": "Não necessariamente. O painel de frota e o financeiro podem ler os relatórios do sistema que você já usa, e o atendimento no WhatsApp e o CRM funcionam ao lado dele. Avaliamos isso no diagnóstico." } },
         { "@type": "Question", "name": "O atendimento no WhatsApp usa o número da minha locadora?", "acceptedAnswer": { "@type": "Answer", "text": "Sim. O agente responde pelo WhatsApp da própria locadora, cota, faz a reserva e passa para a sua equipe quando o cliente pede um atendente." } },
         { "@type": "Question", "name": "Serve para locadora de motos?", "acceptedAnswer": { "@type": "Answer", "text": "Sim. Para locadoras de motos o foco é cobrança semanal, lembretes ao locatário e controle da frota na rua, além do atendimento e do CRM." } },
-        { "@type": "Question", "name": "Quanto custa?", "acceptedAnswer": { "@type": "Answer", "text": "Depende do tamanho da frota e dos módulos. O CRM começa em R$ 297 por mês. No diagnóstico gratuito calculamos quanto a sua locadora perde por mês e mostramos o investimento antes de qualquer contrato." } },
+        { "@type": "Question", "name": "Quanto custa?", "acceptedAnswer": { "@type": "Answer", "text": "Depende do tamanho da frota e dos módulos. No diagnóstico gratuito calculamos quanto a sua locadora perde por mês e mostramos o investimento antes de qualquer contrato." } },
         { "@type": "Question", "name": "Vocês atendem fora de Pernambuco?", "acceptedAnswer": { "@type": "Answer", "text": "Sim. A Dedikar fica em Recife e atende locadoras de todo o Nordeste e do Brasil, com implantação e acompanhamento online." } }
       ]
     }
@@ -91,7 +92,7 @@
     <span class="mono">LOCADORAS DE VEÍCULOS</span>
     <h1>Sistema para locadora de veículos <span class="grad">que recupera a receita que escapa todo mês.</span></h1>
     <p class="lead">Reserva que ninguém respondeu de madrugada, multa que não foi repassada, avaria sem prova, diária atrasada e carro parado no pátio. A Dedikar mostra quanto isso custa para a sua locadora em reais e coloca o sistema que fecha cada vazamento.</p>
-    <div class="ctas"><button type="button" class="btn pri" data-saiba="Locadoras · diagnóstico de receita perdida">Quero saber quanto perco por mês</button><a class="btn vivid" href="#solucao">Ver o que entregamos</a></div>
+    <div class="ctas"><button type="button" class="btn pri" data-saiba="Locadoras · diagnóstico de receita perdida">Quero saber quanto perco por mês</button><a class="btn vivid" href="/locadoras/calculadora/">Calcular quanto eu perco</a></div>
     <div class="chips"><span class="chip">CARROS</span><span class="chip">MOTOS</span><span class="chip">WHATSAPP 24H</span><span class="chip">FROTA</span><span class="chip">FINANCEIRO</span></div>
   </div>
   <div class="win"><div class="bar"><i></i><i></i><i></i><span>Gestão · plataforma da locadora</span></div><img src="/img/loc_inicio.webp" alt="Portal de gestão de uma locadora de veículos com os painéis Financeiro, Frota, Comercial, Site e CRM" width="1412" height="840" loading="eager"></div>
@@ -105,7 +106,7 @@
     <div class="card"><div class="ic">03</div><h3>Avaria sem prova</h3><p>Sem vistoria com foto na retirada e na devolução, o arranhão novo vira discussão e acaba não sendo cobrado.</p></div>
     <div class="card"><div class="ic">04</div><h3>Diária e mensalidade atrasadas</h3><p>Cobrança feita na memória e no WhatsApp pessoal: o atraso cresce e parte nunca volta.</p></div>
     <div class="card"><div class="ic">05</div><h3>Carro parado e preço fixo</h3><p>Carro no pátio sem ninguém ver, manutenção que demora e a mesma diária na baixa e na alta temporada.</p></div>
-    <div class="card"><div class="ic">R$</div><h3>Quanto isso dá por mês?</h3><p>No diagnóstico gratuito fazemos a conta com os números da sua locadora e mostramos o valor em reais, vazamento por vazamento.</p></div>
+    <div class="card"><div class="ic">R$</div><h3>Quanto isso dá por mês?</h3><p>No diagnóstico gratuito fazemos a conta com os números da sua locadora e mostramos o valor em reais, vazamento por vazamento.</p><a class="lk-calc" href="/locadoras/calculadora/">Fazer uma estimativa agora →</a></div>
   </div>
 </div></section>
 
@@ -175,7 +176,7 @@
     <details class="card"><summary>Preciso trocar o sistema que a minha locadora já usa?</summary><p>Não necessariamente. O painel de frota e o financeiro podem ler os relatórios do sistema que você já usa, e o atendimento no WhatsApp e o CRM funcionam ao lado dele. Avaliamos isso no diagnóstico.</p></details>
     <details class="card"><summary>O atendimento no WhatsApp usa o número da minha locadora?</summary><p>Sim. O agente responde pelo WhatsApp da própria locadora, cota, faz a reserva e passa para a sua equipe quando o cliente pede um atendente.</p></details>
     <details class="card"><summary>Serve para locadora de motos?</summary><p>Sim. Para locadoras de motos o foco é cobrança semanal, lembretes ao locatário e controle da frota na rua, além do atendimento e do CRM.</p></details>
-    <details class="card"><summary>Quanto custa?</summary><p>Depende do tamanho da frota e dos módulos. O CRM começa em R$ 297 por mês. No diagnóstico gratuito calculamos quanto a sua locadora perde por mês e mostramos o investimento antes de qualquer contrato.</p></details>
+    <details class="card"><summary>Quanto custa?</summary><p>Depende do tamanho da frota e dos módulos. No diagnóstico gratuito calculamos quanto a sua locadora perde por mês e mostramos o investimento antes de qualquer contrato.</p></details>
     <details class="card"><summary>Vocês atendem fora de Pernambuco?</summary><p>Sim. A Dedikar fica em Recife e atende locadoras de todo o Nordeste e do Brasil, com implantação e acompanhamento online.</p></details>
   </div>
 </div></section>
@@ -183,7 +184,7 @@
 <section class="sec" id="diagnostico"><div class="wrap">
   <div class="cta">
     <div><span class="mono">PRÓXIMO PASSO</span><h2 class="h2">Quanto a sua locadora <span class="grad">perde por mês?</span></h2><p class="lead">Deixe seus dados. O Otto faz a conta com os números da sua locadora no diagnóstico gratuito, sem compromisso.</p></div>
-    <div class="btns"><button type="button" class="btn vivid" data-saiba="Locadoras · diagnóstico de receita perdida">Quero o diagnóstico gratuito</button><a class="btn pri" href="https://wa.me/5581991082411?text=Ol%C3%A1%2C%20Otto!%20Tenho%20uma%20locadora%20e%20quero%20saber%20quanto%20estou%20perdendo%20por%20m%C3%AAs." target="_blank" rel="noopener">Falar no WhatsApp</a></div>
+    <div class="btns"><button type="button" class="btn vivid" data-saiba="Locadoras · diagnóstico de receita perdida">Quero o diagnóstico gratuito</button><a class="btn ghost" href="/locadoras/calculadora/">Usar a calculadora</a><a class="btn pri" href="https://wa.me/5581991082411?text=Ol%C3%A1%2C%20Otto!%20Tenho%20uma%20locadora%20e%20quero%20saber%20quanto%20estou%20perdendo%20por%20m%C3%AAs." target="_blank" rel="noopener">Falar no WhatsApp</a></div>
   </div>
 </div></section>
 </main>

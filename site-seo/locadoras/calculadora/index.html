@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18493063051"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18493063051');
+  gtag('config', 'G-2QG5477V5S');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculadora de receita perdida para locadoras · Dedikar IA</title>
+<meta name="description" content="Calculadora gratuita para locadoras de carros e motos: estime quanto a sua locadora perde por mês com multas não repassadas, avarias não cobradas, reservas sem resposta, atrasos e veículo parado.">
+<meta name="theme-color" content="#0b0b10">
+<link rel="canonical" href="https://dedikaria.com.br/locadoras/calculadora/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://dedikaria.com.br/locadoras/calculadora/">
+<meta property="og:title" content="Calculadora de receita perdida para locadoras · Dedikar IA">
+<meta property="og:description" content="Estime em 2 minutos quanto a sua locadora deixa na mesa todo mês. Gratuito, sem cadastro para calcular.">
+<meta property="og:image" content="https://dedikaria.com.br/img/loc_inicio.webp">
+<link rel="icon" type="image/png" href="/img/favicon.png">
+<link rel="apple-touch-icon" href="/img/logo-dedikar.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+<link rel="stylesheet" href="/assets/dk-paginas.css">
+<style>
+.calc-mode{display:inline-flex;gap:6px;padding:5px;border:1px solid var(--line);border-radius:999px;background:rgba(18,20,28,.7);margin-top:22px}
+.calc-mode button{font:600 14px var(--sans);color:var(--mut);background:none;border:0;border-radius:999px;padding:9px 18px;cursor:pointer}
+.calc-mode button.on{background:linear-gradient(100deg,var(--ac),var(--ac2));color:#061015}
+.calc{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:26px;align-items:start;margin-top:34px}
+.calc-sec{margin-bottom:16px}
+.calc-sec h3{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ac);margin:0 0 6px;font-weight:500}
+.fr{display:block;margin-top:14px}
+.fr .lb{display:flex;justify-content:space-between;gap:14px;font-size:14.5px;color:var(--fg)}
+.fr .lb b{font-family:var(--mono);font-weight:500;color:#8beaf5;white-space:nowrap}
+.fr small{display:block;color:var(--dim);font-size:12.5px;margin-top:4px;line-height:1.5}
+.fr input[type=range]{width:100%;margin:10px 0 0;accent-color:var(--ac)}
+.res{position:sticky;top:96px}
+.res .tot{font-family:var(--serif);font-size:clamp(40px,4.4vw,56px);font-weight:600;line-height:1}
+.res .ano{color:var(--mut);margin-top:6px}
+.bars{display:grid;gap:12px;margin:22px 0 6px}
+.bars .t{display:flex;justify-content:space-between;gap:10px;font-size:14px;color:var(--mut)}
+.bars .t b{color:var(--fg);font-weight:600;white-space:nowrap}
+.bars .tr{height:7px;border-radius:9px;background:rgba(255,255,255,.06);margin-top:6px;overflow:hidden}
+.bars .fl{height:100%;border-radius:9px;background:linear-gradient(90deg,var(--ac),var(--ac2),var(--ac3));transition:width .4s}
+.rec{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-top:1px solid var(--line);padding-top:16px;margin-top:16px}
+.rec b{font-family:var(--serif);font-size:28px;color:var(--ok,#3ecf8e)}
+.res .fine{font-size:12.5px;color:var(--dim);line-height:1.55;margin:12px 0 0}
+.res .btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.copied{font-size:13px;color:var(--ok,#3ecf8e);min-height:18px;margin-top:8px}
+@media (max-width:900px){.calc{grid-template-columns:1fr}.res{position:static}}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Calculadora de receita perdida para locadoras",
+      "url": "https://dedikaria.com.br/locadoras/calculadora/",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "isAccessibleForFree": true,
+      "inLanguage": "pt-BR",
+      "description": "Estimativa de quanto uma locadora de carros ou motos perde por mês com multas, avarias, reservas sem resposta, atrasos e veículo parado.",
+      "provider": { "@id": "https://dedikaria.com.br/#empresa" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Início", "item": "https://dedikaria.com.br/" },
+        { "@type": "ListItem", "position": 2, "name": "Locadoras de veículos", "item": "https://dedikaria.com.br/locadoras/" },
+        { "@type": "ListItem", "position": 3, "name": "Calculadora de receita perdida", "item": "https://dedikaria.com.br/locadoras/calculadora/" }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<canvas id="fx" aria-hidden="true"></canvas>
+<div class="pg">
+<header class="top"><div class="wrap">
+  <a class="brand" href="/" aria-label="Dedikar IA, página inicial"><span class="tile"><img src="/img/logo-dedikar.png" alt="" width="36" height="36"></span><span><b>Dedikar <i>IA</i></b><small>Sistemas inteligentes</small></span></a>
+  <nav class="nav" aria-label="Principal"><a href="/">Início</a><a href="/locadoras/">Locadoras</a><a href="/crm/">Dedikar CRM</a><a href="/orion/">Orion</a><a href="/projetos/">Projetos</a></nav>
+  <a class="btn pri" href="/locadoras/#diagnostico">Diagnóstico gratuito</a>
+</div></header>
+<main>
+
+<section class="sec first"><div class="wrap">
+  <div class="center">
+    <span class="mono">CALCULADORA · LOCADORAS</span>
+    <h1 class="h2" style="font-size:clamp(38px,5vw,64px)">Quanto a sua locadora <span class="grad">deixa na mesa todo mês?</span></h1>
+    <p class="lead">Ajuste os números da sua operação e veja, vazamento por vazamento, quanto escapa por mês. É uma estimativa: no diagnóstico gratuito o Otto confere com os seus dados reais.</p>
+    <div class="calc-mode" role="tablist" aria-label="Tipo de locadora"><button type="button" class="on" data-mode="carros" role="tab" aria-selected="true">Locadora de carros</button><button type="button" data-mode="motos" role="tab" aria-selected="false">Locadora de motos</button></div>
+  </div>
+
+  <div class="calc">
+    <div id="calc-form"></div>
+    <aside class="res"><div class="card no-hv">
+      <span class="mono">O QUE ESCAPA HOJE</span>
+      <div class="tot" id="totMes">R$ 0</div>
+      <div class="ano">por mês · <span id="totAno">R$ 0</span> por ano · <span id="pct">0%</span> do faturamento estimado</div>
+      <div class="bars" id="bars"></div>
+      <div class="rec"><span>Recuperável estimado¹</span><b id="recup">R$ 0</b></div>
+      <p class="fine">¹ Estimativa conservadora: consideramos recuperar cerca de 60% do que escapa hoje. Os valores iniciais são apenas um exemplo; os resultados reais dependem da operação de cada locadora.</p>
+      <div class="btns"><button type="button" class="btn pri" id="calc-cta" data-saiba="Calculadora · diagnóstico de receita perdida">Quero o diagnóstico com meus números</button><button type="button" class="btn ghost" id="calc-copy">Copiar resumo</button></div>
+      <div class="copied" id="copied" aria-live="polite"></div>
+    </div></aside>
+  </div>
+</div></section>
+
+<section class="sec"><div class="wrap">
+  <div class="cta">
+    <div><span class="mono">PRÓXIMO PASSO</span><h2 class="h2">Do número estimado <span class="grad">ao número real.</span></h2><p class="lead">No diagnóstico gratuito o Otto refaz a conta com os relatórios da sua locadora e mostra o que dá para recuperar primeiro. Planos e investimento são apresentados nessa reunião.</p></div>
+    <div class="btns"><button type="button" class="btn vivid" data-saiba="Calculadora · diagnóstico de receita perdida">Quero o diagnóstico gratuito</button><a class="btn ghost" href="/locadoras/">Ver o sistema para locadoras</a></div>
+  </div>
+</div></section>
+
+</main>
+<footer class="foot"><div class="wrap">
+  <a class="brand" href="/" aria-label="Dedikar IA"><span class="tile"><img src="/img/logo-dedikar.png" alt="" width="36" height="36"></span><span><b>Dedikar <i>IA</i></b><small>Desenvolvido por Dedikar IA. Todos os direitos reservados.</small></span></a>
+  <div class="lk"><a href="/locadoras/">Locadoras</a><a href="/crm/">Dedikar CRM</a><a href="/orion/">Orion</a><a href="/projetos/">Projetos</a><a href="/contratar/">Contratar</a><a href="/termos/">Termos de contratação</a><a href="/privacidade">Privacidade</a></div>
+  <span>CNPJ 53.956.977/0001-43 · Recife/PE · <a href="mailto:contato@dedikaria.com.br">contato@dedikaria.com.br</a> · <a href="https://wa.me/5581960001152" target="_blank" rel="noopener">WhatsApp (81) 96000-1152</a></span>
+</div></footer>
+</div>
+<a class="wa" href="https://wa.me/5581991082411?text=Ol%C3%A1%2C%20Otto!%20Tenho%20uma%20locadora%20e%20vim%20pelo%20site%20da%20Dedikar%20IA." target="_blank" rel="noopener" aria-label="Falar com a Dedikar no WhatsApp"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-5.2A8 8 0 1 1 21 12z"/><path d="M9 9.5c.3 1.6 1.9 3.4 3.6 4.2l1.3-1.1 2 .9-.4 1.6c-3 .3-7.2-3.5-7-6.4l1.6-.5.8 2"/></svg></a>
+<div class="ov" id="dk-saiba" hidden>
+  <div class="md" role="dialog" aria-modal="true" aria-labelledby="dk-saiba-t">
+    <button type="button" class="x" aria-label="Fechar">×</button>
+    <span class="mono">DIAGNÓSTICO GRATUITO</span>
+    <h3 id="dk-saiba-t" data-proj>Locadoras</h3>
+    <p class="mut" style="margin:0 0 18px">Deixe seus dados e o Otto retorna em até 1 dia útil para marcar o diagnóstico da sua locadora.</p>
+    <form novalidate>
+      <div class="row2">
+        <label class="fld">Nome<input class="inp" name="nome" autocomplete="name" placeholder="Seu nome" required><em class="err" data-err="nome" hidden>Informe seu nome.</em></label>
+        <label class="fld">WhatsApp<input class="inp" name="tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="(81) 99999-9999" required><em class="err" data-err="tel" hidden>Informe um WhatsApp com DDD.</em></label>
+      </div>
+      <div class="row2">
+        <label class="fld">E-mail<input class="inp" name="email" type="email" autocomplete="email" placeholder="voce@sualocadora.com.br" required><em class="err" data-err="email" hidden>Informe um e-mail válido.</em></label>
+        <label class="fld">Locadora<input class="inp" name="empresa" autocomplete="organization" placeholder="Nome da locadora" required><em class="err" data-err="empresa" hidden>Informe a empresa.</em></label>
+      </div>
+      <label class="fld">Segmento<select class="inp" name="segmento" required><option value="" disabled>Selecione</option><option selected>Locadora de veículos</option><option>Locadora de motos</option><option>Outro</option></select><em class="err" data-err="segmento" hidden>Escolha o segmento.</em></label>
+      <label class="fld">Resultado da calculadora <small>(enviado junto, pode editar)</small><textarea class="inp" name="msg" rows="3" maxlength="1500" placeholder="Ex.: 40 carros; perdemos reserva à noite e a multa nunca é repassada a tempo."></textarea></label>
+      <p class="err" data-falha hidden>Não conseguimos enviar agora. Tente de novo ou chame no WhatsApp.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
+        <small class="mut">Ao enviar, você concorda com a nossa <a href="/privacidade" target="_blank">Política de Privacidade</a>.</small>
+        <button type="submit" class="btn pri">Quero o diagnóstico</button>
+      </div>
+    </form>
+    <div data-ok hidden style="text-align:center;padding:10px 0">
+      <h3 style="padding:0">Recebido, <span data-nome></span>!</h3>
+      <p class="mut">Em até 1 dia útil entramos em contato. Se preferir adiantar, já escolha o dia do diagnóstico ou chame no WhatsApp.</p>
+      <div class="ctas" style="justify-content:center"><a class="btn pri" href="https://materiais.dedikaria.com.br/?isca=diagnostico&amp;utm_source=site&amp;utm_medium=calculadora" target="_blank" rel="noopener">Escolher o dia do diagnóstico</a><a class="btn ghost" href="https://wa.me/5581991082411?text=Ol%C3%A1%2C%20Otto!%20Tenho%20uma%20locadora%20e%20vim%20pelo%20site%20da%20Dedikar%20IA." target="_blank" rel="noopener">Falar no WhatsApp</a></div>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  'use strict';
+  var BRL = function (v) { return 'R$ ' + Math.round(v).toLocaleString('pt-BR'); };
+  var RECUP = 0.6;
+  var M = {
+    carros: {
+      seg: 'Locadora de veículos',
+      secoes: [
+        { t: 'A operação', c: [
+          { k: 'frota', l: 'Veículos na frota', min: 5, max: 300, s: 1, v: 40, f: function (v) { return v + ' carros'; } },
+          { k: 'diaria', l: 'Diária média', min: 60, max: 400, s: 5, v: 140, f: BRL },
+          { k: 'ocup', l: 'Ocupação média', min: 30, max: 100, s: 1, v: 70, f: function (v) { return v + '%'; } }] },
+        { t: 'Vazamento 1 · Multas', c: [
+          { k: 'multas', l: 'Multas recebidas por mês', min: 0, max: 200, s: 1, v: 18, f: function (v) { return v + ' multas'; } },
+          { k: 'multaVal', l: 'Valor médio da multa', min: 80, max: 600, s: 5, v: 195, f: BRL },
+          { k: 'multaPerda', l: '% que não é repassada ao cliente no prazo', min: 0, max: 100, s: 1, v: 25, f: function (v) { return v + '%'; }, h: 'Perde o prazo da indicação do condutor, o cliente some e a locadora paga.' }] },
+        { t: 'Vazamento 2 · Avarias', c: [
+          { k: 'avarias', l: 'Devoluções com avaria por mês', min: 0, max: 100, s: 1, v: 6, f: function (v) { return v + ' casos'; } },
+          { k: 'avariaVal', l: 'Custo médio do reparo', min: 100, max: 5000, s: 50, v: 650, f: BRL },
+          { k: 'avariaPerda', l: '% que a locadora não consegue cobrar', min: 0, max: 100, s: 1, v: 40, f: function (v) { return v + '%'; }, h: 'Sem vistoria com foto e assinatura, a cobrança vira discussão.' }] },
+        { t: 'Vazamento 3 · Reservas sem resposta', c: [
+          { k: 'contatos', l: 'Contatos no WhatsApp por mês sem resposta rápida', min: 0, max: 600, s: 5, v: 90, f: function (v) { return v + ' contatos'; } },
+          { k: 'contPerda', l: '% que desiste antes de ser atendido', min: 0, max: 100, s: 1, v: 45, f: function (v) { return v + '%'; } },
+          { k: 'conv', l: 'Dos atendidos, % que fecha reserva', min: 5, max: 80, s: 1, v: 25, f: function (v) { return v + '%'; } },
+          { k: 'dias', l: 'Dias médios por locação', min: 1, max: 30, s: 1, v: 4, f: function (v) { return v + ' dias'; } }] },
+        { t: 'Vazamento 4 · Atrasos e inadimplência', c: [
+          { k: 'atraso', l: '% do faturamento que atrasa', min: 0, max: 50, s: 1, v: 12, f: function (v) { return v + '%'; } },
+          { k: 'atrasoPerda', l: 'Desse atraso, % que vira perda definitiva', min: 0, max: 100, s: 1, v: 30, f: function (v) { return v + '%'; } }] },
+        { t: 'Vazamento 5 · Carro parado', c: [
+          { k: 'parado', l: 'Dias parados por carro por mês', min: 0, max: 20, s: 1, v: 5, f: function (v) { return v + ' dias'; }, h: 'Estimativa: consideramos que reprecificar e oferecer ativamente ocupa 30% desses dias.' }] }
+      ],
+      calc: function (d) {
+        var fat = d.frota * d.diaria * 30 * (d.ocup / 100);
+        return { fat: fat, itens: [
+          ['Multas não repassadas', d.multas * d.multaVal * (d.multaPerda / 100)],
+          ['Avarias não cobradas', d.avarias * d.avariaVal * (d.avariaPerda / 100)],
+          ['Reservas perdidas por falta de resposta', d.contatos * (d.contPerda / 100) * (d.conv / 100) * d.diaria * d.dias],
+          ['Atrasos que viram perda', fat * (d.atraso / 100) * (d.atrasoPerda / 100)],
+          ['Carro parado sem reprecificar', d.frota * d.parado * d.diaria * 0.30]] };
+      }
+    },
+    motos: {
+      seg: 'Locadora de motos',
+      secoes: [
+        { t: 'A operação', c: [
+          { k: 'frota', l: 'Motos na frota', min: 10, max: 500, s: 5, v: 80, f: function (v) { return v + ' motos'; } },
+          { k: 'semanal', l: 'Valor semanal do aluguel', min: 120, max: 600, s: 10, v: 260, f: BRL },
+          { k: 'ocup', l: 'Motos alugadas (% da frota)', min: 30, max: 100, s: 1, v: 85, f: function (v) { return v + '%'; } }] },
+        { t: 'Vazamento 1 · Inadimplência semanal', c: [
+          { k: 'inad', l: '% de semanas que atrasam', min: 0, max: 60, s: 1, v: 18, f: function (v) { return v + '%'; } },
+          { k: 'inadPerda', l: 'Desses atrasos, % que não é recuperado', min: 0, max: 100, s: 1, v: 35, f: function (v) { return v + '%'; } }] },
+        { t: 'Vazamento 2 · Multas', c: [
+          { k: 'multas', l: 'Multas recebidas por mês', min: 0, max: 300, s: 1, v: 30, f: function (v) { return v + ' multas'; } },
+          { k: 'multaVal', l: 'Valor médio da multa', min: 80, max: 600, s: 5, v: 180, f: BRL },
+          { k: 'multaPerda', l: '% não repassada ao locatário no prazo', min: 0, max: 100, s: 1, v: 35, f: function (v) { return v + '%'; } }] },
+        { t: 'Vazamento 3 · Avarias e sinistros', c: [
+          { k: 'avarias', l: 'Devoluções com avaria por mês', min: 0, max: 150, s: 1, v: 12, f: function (v) { return v + ' casos'; } },
+          { k: 'avariaVal', l: 'Custo médio do reparo', min: 50, max: 3000, s: 50, v: 380, f: BRL },
+          { k: 'avariaPerda', l: '% que não consegue cobrar', min: 0, max: 100, s: 1, v: 50, f: function (v) { return v + '%'; } }] },
+        { t: 'Vazamento 4 · Interessados sem resposta', c: [
+          { k: 'contatos', l: 'Interessados que chamam no WhatsApp por mês', min: 0, max: 800, s: 10, v: 120, f: function (v) { return v + ' contatos'; } },
+          { k: 'contPerda', l: '% que desiste antes de ser atendido', min: 0, max: 100, s: 1, v: 40, f: function (v) { return v + '%'; } },
+          { k: 'conv', l: 'Dos atendidos, % que fecha contrato', min: 5, max: 80, s: 1, v: 30, f: function (v) { return v + '%'; } },
+          { k: 'semanas', l: 'Semanas médias de cada contrato', min: 1, max: 52, s: 1, v: 10, f: function (v) { return v + ' semanas'; } }] },
+        { t: 'Vazamento 5 · Moto parada', c: [
+          { k: 'parado', l: 'Dias parados por moto por mês', min: 0, max: 20, s: 1, v: 4, f: function (v) { return v + ' dias'; }, h: 'Estimativa: consideramos que metade desses dias pode voltar a render com reposição mais rápida.' }] }
+      ],
+      calc: function (d) {
+        var fat = d.frota * (d.ocup / 100) * d.semanal * 4.33;
+        return { fat: fat, itens: [
+          ['Inadimplência não recuperada', fat * (d.inad / 100) * (d.inadPerda / 100)],
+          ['Multas não repassadas', d.multas * d.multaVal * (d.multaPerda / 100)],
+          ['Avarias e sinistros não cobrados', d.avarias * d.avariaVal * (d.avariaPerda / 100)],
+          ['Contratos perdidos por falta de resposta', d.contatos * (d.contPerda / 100) * (d.conv / 100) * d.semanal * d.semanas / 12 * 4.33],
+          ['Moto parada sem reposição', d.frota * d.parado * (d.semanal / 7) * 0.5]] };
+      }
+    }
+  };
+  var modo = 'carros', vals = { carros: {}, motos: {} }, resumo = '';
+  var $ = function (s) { return document.querySelector(s); };
+
+  function render() {
+    var m = M[modo], h = '';
+    m.secoes.forEach(function (s) {
+      h += '<div class="card calc-sec no-hv"><h3>' + s.t + '</h3>';
+      s.c.forEach(function (c) {
+        if (vals[modo][c.k] === undefined) vals[modo][c.k] = c.v;
+        var v = vals[modo][c.k];
+        h += '<label class="fr"><span class="lb"><span>' + c.l + '</span><b id="k_' + c.k + '">' + c.f(v) + '</b></span>' +
+          '<input type="range" data-k="' + c.k + '" min="' + c.min + '" max="' + c.max + '" step="' + c.s + '" value="' + v + '" aria-label="' + c.l + '">' +
+          (c.h ? '<small>' + c.h + '</small>' : '') + '</label>';
+      });
+      h += '</div>';
+    });
+    $('#calc-form').innerHTML = h;
+    var campos = {}; m.secoes.forEach(function (s) { s.c.forEach(function (c) { campos[c.k] = c; }); });
+    document.querySelectorAll('#calc-form input[type=range]').forEach(function (i) {
+      i.addEventListener('input', function () {
+        var k = i.dataset.k; vals[modo][k] = +i.value; $('#k_' + k).textContent = campos[k].f(vals[modo][k]); calc();
+      });
+    });
+    calc();
+  }
+
+  function calc() {
+    var r = M[modo].calc(vals[modo]);
+    var tot = r.itens.reduce(function (a, b) { return a + b[1]; }, 0);
+    var mx = Math.max.apply(null, r.itens.map(function (i) { return i[1]; }).concat([1]));
+    var pct = (tot / Math.max(r.fat, 1) * 100).toFixed(1).replace('.', ',') + '%';
+    $('#totMes').textContent = BRL(tot); $('#totAno').textContent = BRL(tot * 12); $('#pct').textContent = pct;
+    $('#recup').textContent = BRL(tot * RECUP) + '/mês';
+    $('#bars').innerHTML = r.itens.map(function (i) {
+      return '<div><div class="t"><span>' + i[0] + '</span><b>' + BRL(i[1]) + '</b></div><div class="tr"><div class="fl" style="width:' + (i[1] / mx * 100).toFixed(1) + '%"></div></div></div>';
+    }).join('');
+    resumo = 'Calculadora de receita perdida (' + (modo === 'carros' ? 'locadora de carros' : 'locadora de motos') + '):\n' +
+      r.itens.map(function (i) { return '- ' + i[0] + ': ' + BRL(i[1]) + '/mês'; }).join('\n') +
+      '\nTotal estimado: ' + BRL(tot) + '/mês (' + BRL(tot * 12) + '/ano), cerca de ' + pct + ' do faturamento estimado.' +
+      '\nRecuperável estimado (60%): ' + BRL(tot * RECUP) + '/mês.' +
+      '\nDados informados: ' + M[modo].secoes.map(function (s) { return s.c.map(function (c) { return c.l + ' = ' + c.f(vals[modo][c.k]); }).join('; '); }).join('; ') + '.';
+  }
+
+  document.querySelectorAll('.calc-mode button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.querySelectorAll('.calc-mode button').forEach(function (x) { x.classList.remove('on'); x.setAttribute('aria-selected', 'false'); });
+      b.classList.add('on'); b.setAttribute('aria-selected', 'true'); modo = b.dataset.mode; render();
+      if (window.DK && DK.ga) DK.ga('calculadora_modo', { 'modo': modo });
+    });
+  });
+
+  /* o formulário de diagnóstico já chega com o resultado da calculadora */
+  document.querySelectorAll('[data-saiba]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      setTimeout(function () {
+        var f = document.querySelector('#dk-saiba form'); if (!f) return;
+        f.elements.msg.value = resumo.slice(0, 1500);
+        f.elements.segmento.value = M[modo].seg;
+      }, 0);
+    });
+  });
+
+  $('#calc-copy').addEventListener('click', function () {
+    var ok = function () { $('#copied').textContent = 'Resumo copiado.'; };
+    if (navigator.clipboard) navigator.clipboard.writeText(resumo).then(ok, function () { $('#copied').textContent = 'Não foi possível copiar.'; });
+  });
+
+  render();
+})();
+</script>
+<script src="/assets/dk-paginas.js"></script>
+</body>
+</html>
