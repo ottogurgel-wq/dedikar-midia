@@ -1,0 +1,15 @@
+
+/* ===== Padrão visual da home (nov/2026): brilho do mouse, palavras na rolagem, degradê animado, sombra nos cartões ===== */
+.glow{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(600px circle at var(--gx,70%) var(--gy,20%),rgba(56,217,236,.08),transparent 60%)}
+.grad{background:linear-gradient(100deg,var(--ac) 0%,var(--ac2) 35%,var(--ac3) 55%,var(--ac) 80%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:dkShine 7s linear infinite}
+@keyframes dkShine{to{background-position:-250% 0}}
+.words .w{display:inline-block;transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1),filter .7s ease}
+.words .wg{display:inline;transition:opacity .9s ease,filter .9s ease}
+.js .words:not(.on) .w{opacity:.08;transform:translateY(.35em);filter:blur(6px)}
+.js .words:not(.on) .wg{opacity:.08;filter:blur(6px)}
+.dk-hv{position:relative;transition:border-color .3s,background-color .3s,translate .35s cubic-bezier(.2,.7,.2,1),box-shadow .3s}
+.dk-hv::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(380px circle at var(--mx,50%) var(--my,50%),rgba(56,217,236,.11),rgba(56,217,236,0) 62%);opacity:0;transition:opacity .35s;z-index:1}
+.dk-hv:hover{border-color:rgba(56,217,236,.35);translate:0 -4px;background-color:#151722;box-shadow:0 18px 50px rgba(0,0,0,.35)}
+.dk-hv:hover::before{opacity:1}
+@media (hover:none){.dk-hv:hover{translate:none}}
+@media (prefers-reduced-motion:reduce){.grad{animation:none}.js .words:not(.on) .w,.js .words:not(.on) .wg{opacity:1;transform:none;filter:none}.dk-hv:hover{translate:none}}

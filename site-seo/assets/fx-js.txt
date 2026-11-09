@@ -1,0 +1,78 @@
+
+/* ===== Padrão visual da home (nov/2026): brilho do mouse, palavras na rolagem, rótulos que "decodificam", sombra nos cartões ===== */
+(function () {
+  'use strict';
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var root = document.documentElement;
+  root.classList.add('js');
+
+  /* brilho que segue o mouse (mesmo da home) */
+  if (!document.querySelector('.glow')) {
+    var gl = document.createElement('div');
+    gl.className = 'glow';
+    gl.setAttribute('aria-hidden', 'true');
+    var pg = document.querySelector('.pg');
+    if (pg && pg.parentNode) pg.parentNode.insertBefore(gl, pg); else document.body.insertBefore(gl, document.body.firstChild);
+  }
+  addEventListener('pointermove', function (e) {
+    root.style.setProperty('--gx', e.clientX + 'px');
+    root.style.setProperty('--gy', e.clientY + 'px');
+  }, { passive: true });
+
+  /* títulos: quebra em palavras e anima ao entrar na tela */
+  var heads = document.querySelectorAll('main h1, main .h2');
+  heads.forEach(function (h) {
+    if (h.classList.contains('words')) return;
+    h.classList.add('words');
+    (function split(node) {
+      Array.prototype.slice.call(node.childNodes).forEach(function (c) {
+        if (c.nodeType === 3) {
+          var frag = document.createDocumentFragment();
+          c.textContent.split(/(\s+)/).forEach(function (p) {
+            if (!p) return;
+            if (/^\s+$/.test(p)) frag.appendChild(document.createTextNode(p));
+            else { var s = document.createElement('span'); s.className = 'w'; s.textContent = p; frag.appendChild(s); }
+          });
+          node.replaceChild(frag, c);
+        } else if (c.nodeType === 1 && c.classList.contains('grad')) c.classList.add('wg');
+        else if (c.nodeType === 1 && c.tagName !== 'BR') split(c);
+      });
+    })(h);
+    h.querySelectorAll('.w, .wg').forEach(function (w, i) { w.style.transitionDelay = (i * 55) + 'ms'; });
+  });
+
+  /* rótulos em fonte mono: efeito de "decodificar" */
+  function scramble(el) {
+    if (reduced || el.children.length) return;
+    var final = el.textContent, chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/·#', f = 0;
+    var t = setInterval(function () {
+      el.textContent = final.split('').map(function (ch, i) { return i < f / 2 || ch === ' ' ? ch : chars[Math.floor(Math.random() * chars.length)]; }).join('');
+      if (++f > final.length * 2) { clearInterval(t); el.textContent = final; }
+    }, 28);
+  }
+  var labels = document.querySelectorAll('main .mono');
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        if (e.target.classList.contains('words')) e.target.classList.add('on'); else scramble(e.target);
+        io.unobserve(e.target);
+      });
+    }, { threshold: .25 });
+    heads.forEach(function (el) { io.observe(el); });
+    labels.forEach(function (el) { io.observe(el); });
+  } else heads.forEach(function (el) { el.classList.add('on'); });
+
+  /* cartões: sobe, borda acesa e brilho que segue o mouse */
+  document.querySelectorAll('main .card, main .plan, main .step, main .proj').forEach(function (el) {
+    if (parseFloat(getComputedStyle(el).borderTopWidth) > 0) el.classList.add('dk-hv');
+  });
+  document.addEventListener('pointermove', function (e) {
+    var g = e.target.closest && e.target.closest('.dk-hv');
+    if (!g) return;
+    var r = g.getBoundingClientRect();
+    g.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+    g.style.setProperty('--my', (e.clientY - r.top) + 'px');
+  }, { passive: true });
+})();
