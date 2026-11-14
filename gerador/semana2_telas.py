@@ -19,7 +19,7 @@ p,S=D['Portfolio']
 S[1]=slide(2,T,tela('Locadora','Portal <i>de gestão.</i>','portal-inicio','gestão · plataforma dedikar','Financeiro, frota, site e CRM numa entrada só. Tela real, dados protegidos.'))
 S[2]=slide(3,T,tela('Locadora · financeiro','Saldo projetado <i>dia a dia.</i>','portal-financeiro','painel financeiro','Caixa de hoje, a receber, a pagar e o saldo dos próximos meses. Valores ocultos.'))
 S[3]=slide(4,T,tela('Pousada','Receita × <i>caixa.</i>','pousada','painel financeiro · pousada','Ocupação, diária média, canais de venda e auditoria entre maquininha, banco e reservas.'))
-S[4]=slide(5,T,tela('Comercial','Dedikar <i>CRM.</i>','crm-dedikar-negocios','crm · negócios','Funil, tarefas e WhatsApp numa tela, com agentes fazendo o follow-up. Dados de demonstração.'))
+S[4]=slide(5,T,tela('Comercial','Dedikar <i>CRM.</i>','crm-dedikar','crm · início','Receita, vendas, funil e o que pede atenção agora, numa tela. Dados de demonstração.'))
 # Desconto: a regra de alçada no precificador real
 p,S=D['Desconto']
 S[4]=slide(5,T,tela('Com sistema','Alçada de desconto <i>na tela.</i>','precificador','precificador · locadora','O vendedor vê até onde pode ir. Acima da alçada, o pedido vai para aprovação.'))
